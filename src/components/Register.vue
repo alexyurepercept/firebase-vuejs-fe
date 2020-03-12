@@ -122,7 +122,6 @@ export default {
             .then(() => {
               this.$router.push("/login");
             });
-          console.log(data);
         })
         .catch(err => {
           this.error = err.message;

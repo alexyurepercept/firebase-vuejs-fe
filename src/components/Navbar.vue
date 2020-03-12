@@ -1,7 +1,9 @@
 <template>
   <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
     <div class="container">
-      <router-link to="/" class="navbar-brand">Eclipx-Firebase-Vue</router-link>
+      <router-link to="/dashboard" class="navbar-brand"
+        >Eclipx-Firebase-Vue</router-link
+      >
       <button
         class="navbar-toggler"
         type="button"

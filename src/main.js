@@ -31,6 +31,14 @@ firebase.auth().onAuthStateChanged(user => {
   store.dispatch("fetchUser", user);
 });
 
+router.beforeEach(async (to, from, next) => {
+  if (!store.state.user.loggedIn) {
+    if (to.name === "Dashboard") {
+      return next({ name: "Login" });
+    }
+  }
+  next();
+});
 new Vue({
   router,
   store,
