@@ -1,0 +1,34 @@
+version: 2
+jobs:
+  deployprod:
+    docker:
+      - image: circleci/node:10.16.0
+    working_directory: ~/firebase-vuejs-fe
+    steps:
+      - checkout
+      # Download and cache dependencies
+      - run:
+          name: Install Firebase Globally
+          command: sudo npm install -g firebase-tools
+      - run:
+          name: Install Dependencies
+          command: npm install
+      - run:
+          name: Test
+          command: npm run test
+      - run:
+          name: Build
+          command: npm run build
+      - run:
+          name: Firebase Deploy
+          command: firebase deploy --token "$FIREBASE_TOKEN"
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - deployprod:
+          context: eclipx-firebase-vuejs
+          filters:
+            branches:
+              only:
+                - master
