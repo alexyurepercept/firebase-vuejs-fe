@@ -5,6 +5,9 @@
         <div class="card">
           <div class="card-header">Map</div>
           <div class="card-body">
+            <div v-if="directionsError" class="alert alert-danger">
+              {{ directionsError }}
+            </div>
             <gmap-autocomplete
               class="introInput"
               @place_changed="setPlace"
@@ -53,6 +56,7 @@ export default {
       },
       directions: {},
       error: null,
+      directionsError: null,
       markers: null,
       message: ""
     };
@@ -68,7 +72,6 @@ export default {
   },
   methods: {
     setPlace: function(place) {
-      console.log(place);
       let directionService = new window.google.maps.DirectionsService();
       var request = {
         origin: this.center,
@@ -77,8 +80,10 @@ export default {
       };
       directionService.route(request, (result, status) => {
         if (status == "OK") {
-          console.log(result);
           this.directions = result;
+          this.directionsError = null;
+        } else {
+          this.directionsError = `directions returns ${status}`;
         }
       });
     },
@@ -112,7 +117,6 @@ export default {
           this.error = `${err.stack}`;
           this.message = "";
         });
-      console.log(this.user.data);
     }
   }
 };
