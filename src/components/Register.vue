@@ -102,13 +102,10 @@ export default {
     submit() {
       let addRole = firebase.functions().httpsCallable("setUserRole");
 
-      console.log(this.form.role.selected);
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.form.email, this.form.password)
         .then(data => {
-          console.log(data.user);
-
           let roleData = {
             uid: data.user.uid,
             role: { [this.form.role.selected]: true }

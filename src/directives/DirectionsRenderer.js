@@ -33,9 +33,7 @@ export default MapElementFactory({
   // Actions you want to perform before creating the object instance using the
   // provided constructor (for example, you can modify the `options` object).
   // If you return a promise, execution will suspend until the promise resolves
-  beforeCreate(options) {
-    console.log(options);
-  },
+  beforeCreate(options) {},
   // Actions to perform after creating the object instance.
   afterCreate(directionsRenderer) {
     this.$watch("directions", directions => {
