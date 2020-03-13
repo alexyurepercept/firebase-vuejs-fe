@@ -59,16 +59,16 @@
 </template>
 
 <script>
-import firebase from "firebase";
+import firebase from 'firebase';
 
 export default {
   data() {
     return {
       form: {
-        email: "",
-        password: ""
+        email: '',
+        password: '',
       },
-      error: null
+      error: null,
     };
   },
   methods: {
@@ -77,12 +77,12 @@ export default {
         .auth()
         .signInWithEmailAndPassword(this.form.email, this.form.password)
         .then(() => {
-          this.$router.replace({ name: "Dashboard" });
+          this.$router.replace({ name: 'Dashboard' });
         })
         .catch(err => {
           this.error = err.message;
         });
-    }
-  }
+    },
+  },
 };
 </script>

@@ -1,19 +1,19 @@
-import Vue from "vue";
-import App from "./App.vue";
-import * as firebase from "firebase";
-import store from "./store";
-import router from "./routes/index";
-import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
-import "bootstrap/dist/css/bootstrap.css";
-import "bootstrap-vue/dist/bootstrap-vue.css";
-import * as VueGoogleMaps from "vue2-google-maps";
+import Vue from 'vue';
+import App from './App.vue';
+import * as firebase from 'firebase';
+import store from './store';
+import router from './routes/index';
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
+import * as VueGoogleMaps from 'vue2-google-maps';
 
 Vue.use(VueGoogleMaps, {
   load: {
     key: process.env.VUE_APP_GOOGLE_API_KEY,
-    libraries: "places,directions"
+    libraries: 'places,directions',
   },
-  installComponents: true
+  installComponents: true,
 });
 // Install BootstrapVue
 Vue.use(BootstrapVue);
@@ -30,14 +30,14 @@ var firebaseConfig = {
   projectId: process.env.VUE_APP_FIREBASE_PROJECT_ID,
   storageBucket: process.env.VUE_APP_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: process.env.VUE_APP_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.VUE_APP_FIREBASE_APP_ID
+  appId: process.env.VUE_APP_FIREBASE_APP_ID,
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
 let authPromise;
 firebase.auth().onAuthStateChanged(user => {
-  authPromise = store.dispatch("fetchUser", user);
+  authPromise = store.dispatch('fetchUser', user);
   return authPromise;
 });
 
@@ -47,14 +47,14 @@ router.beforeEach(async (to, from, next) => {
     await authPromise;
   }
   if (!store.state.user.loggedIn) {
-    if (to.name === "Dashboard") {
-      return next({ name: "Login" });
-    } else if (to.name === "Home") {
-      return next({ name: "Login" });
+    if (to.name === 'Dashboard') {
+      return next({ name: 'Login' });
+    } else if (to.name === 'Home') {
+      return next({ name: 'Login' });
     }
   } else {
-    if (to.name === "Home") {
-      return next({ name: "Dashboard" });
+    if (to.name === 'Home') {
+      return next({ name: 'Dashboard' });
     }
   }
   next();
@@ -63,5 +63,5 @@ router.beforeEach(async (to, from, next) => {
 new Vue({
   router,
   store,
-  render: h => h(App)
-}).$mount("#app");
+  render: h => h(App),
+}).$mount('#app');

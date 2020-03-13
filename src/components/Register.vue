@@ -77,30 +77,30 @@
 </template>
 
 <script>
-import firebase from "firebase";
+import firebase from 'firebase';
 
 export default {
   data() {
     return {
       form: {
-        name: "",
-        email: "",
-        password: "",
+        name: '',
+        email: '',
+        password: '',
         role: {
-          selected: "basic",
+          selected: 'basic',
           options: [
-            { value: "basic", name: "Basic" },
-            { value: "admin", name: "Admin" }
-          ]
-        }
+            { value: 'basic', name: 'Basic' },
+            { value: 'admin', name: 'Admin' },
+          ],
+        },
       },
 
-      error: null
+      error: null,
     };
   },
   methods: {
     submit() {
-      let addRole = firebase.functions().httpsCallable("setUserRole");
+      let addRole = firebase.functions().httpsCallable('setUserRole');
 
       firebase
         .auth()
@@ -108,7 +108,7 @@ export default {
         .then(data => {
           let roleData = {
             uid: data.user.uid,
-            role: { [this.form.role.selected]: true }
+            role: { [this.form.role.selected]: true },
           };
           return addRole(roleData);
         })
@@ -117,13 +117,13 @@ export default {
             .auth()
             .signOut()
             .then(() => {
-              this.$router.push("/login");
+              this.$router.push('/login');
             });
         })
         .catch(err => {
           this.error = err.message;
         });
-    }
-  }
+    },
+  },
 };
 </script>

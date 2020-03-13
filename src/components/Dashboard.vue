@@ -39,33 +39,33 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
-import axios from "axios";
-import DirectionsRenderer from "../directives/DirectionsRenderer.js";
+import { mapGetters } from 'vuex';
+import axios from 'axios';
+import DirectionsRenderer from '../directives/DirectionsRenderer.js';
 export default {
   components: { DirectionsRenderer },
   data() {
     return {
       mapData: {
         attrs: {},
-        listeners: {}
+        listeners: {},
       },
       center: {
         lat: 0,
-        lng: 0
+        lng: 0,
       },
       directions: {},
       error: null,
       directionsError: null,
       markers: null,
-      message: ""
+      message: '',
     };
   },
   computed: {
     // map `this.user` to `this.$store.getters.user`
     ...mapGetters({
-      user: "user"
-    })
+      user: 'user',
+    }),
   },
   mounted() {
     this.geolocate();
@@ -76,10 +76,10 @@ export default {
       var request = {
         origin: this.center,
         destination: place.formatted_address,
-        travelMode: "DRIVING"
+        travelMode: 'DRIVING',
       };
       directionService.route(request, (result, status) => {
-        if (status == "OK") {
+        if (status == 'OK') {
           this.directions = result;
           this.directionsError = null;
         } else {
@@ -91,33 +91,33 @@ export default {
       navigator.geolocation.getCurrentPosition(position => {
         this.center = {
           lat: position.coords.latitude,
-          lng: position.coords.longitude
+          lng: position.coords.longitude,
         };
       });
     },
     sendRequest: function() {
       axios
         .get(
-          "https://us-central1-fir-auth-eclipx.cloudfunctions.net/api/admin_only",
+          'https://us-central1-fir-auth-eclipx.cloudfunctions.net/api/admin_only',
           {
             headers: {
-              Authorization: "Bearer " + this.user.data.idToken
-            }
-          }
+              Authorization: 'Bearer ' + this.user.data.idToken,
+            },
+          },
         )
         .then(response => {
           this.message = `${response.status}\n${JSON.stringify(
             response.data,
             null,
-            2
+            2,
           )}`;
-          this.error = "";
+          this.error = '';
         })
         .catch(err => {
           this.error = `${err.stack}`;
-          this.message = "";
+          this.message = '';
         });
-    }
-  }
+    },
+  },
 };
 </script>
