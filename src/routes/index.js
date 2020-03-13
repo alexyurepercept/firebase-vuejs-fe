@@ -11,6 +11,10 @@ const router = new Router({
   base: process.env.BASE_URL,
   routes: [
     {
+      path: "/",
+      name: "Home"
+    },
+    {
       path: "/login",
       name: "Login",
       component: Login

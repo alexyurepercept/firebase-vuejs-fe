@@ -49,6 +49,12 @@ router.beforeEach(async (to, from, next) => {
   if (!store.state.user.loggedIn) {
     if (to.name === "Dashboard") {
       return next({ name: "Login" });
+    } else if (to.name === "Home") {
+      return next({ name: "Login" });
+    }
+  } else {
+    if (to.name === "Home") {
+      return next({ name: "Dashboard" });
     }
   }
   next();
