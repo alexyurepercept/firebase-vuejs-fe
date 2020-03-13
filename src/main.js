@@ -27,11 +27,17 @@ var firebaseConfig = {}
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+let authPromise;
 firebase.auth().onAuthStateChanged(user => {
-  store.dispatch("fetchUser", user);
+  authPromise = store.dispatch("fetchUser", user);
+  return authPromise;
 });
 
 router.beforeEach(async (to, from, next) => {
+  // this is to make sure fetch user is completed before route to any page
+  if (authPromise) {
+    await authPromise;
+  }
   if (!store.state.user.loggedIn) {
     if (to.name === "Dashboard") {
       return next({ name: "Login" });
