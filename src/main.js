@@ -37,7 +37,12 @@ firebase.initializeApp(firebaseConfig);
 
 let authPromise;
 firebase.auth().onAuthStateChanged(user => {
-  authPromise = store.dispatch('fetchUser', user);
+  authPromise = store.dispatch('fetchUser', user).then(() => {
+    // if user is logged butt still in Login page (this normally happens when user logged in and then refresh the page)
+    if (store.state.user.loggedIn && router.currentRoute.name === 'Login') {
+      router.push({ name: 'Dashboard' });
+    }
+  });
   return authPromise;
 });
 
