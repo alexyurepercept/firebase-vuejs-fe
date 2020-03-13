@@ -12,7 +12,7 @@ const router = new Router({
   routes: [
     {
       path: "/login",
-      name: "login",
+      name: "Login",
       component: Login
     },
     {
